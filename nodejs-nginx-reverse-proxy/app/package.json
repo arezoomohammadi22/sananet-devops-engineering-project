@@ -1,0 +1,15 @@
+{
+  "name": "nodejs-nginx-reverse-proxy-demo",
+  "version": "1.0.0",
+  "description": "Simple Node.js app running on port 3000 behind an Nginx reverse proxy",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Arezoo Mohammadi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
+
