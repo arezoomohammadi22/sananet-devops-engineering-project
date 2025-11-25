@@ -1,0 +1,26 @@
+filebeat.inputs:
+  - type: container
+    id: my-filestream-id
+    enabled: true
+    paths:
+      - /var/log/containers/master-payment*.log
+    processors:
+      - drop_fields:
+          fields: ["host.ip", "host.mac", "ecs.version"]
+    include_lines: ['err', 'warn']
+
+logging.level: debug
+
+filebeat.config.modules:
+  path: /etc/filebeat/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 1
+
+output.kafka:
+  hosts: ['192.168.10.170:9092', '192.168.10.172:9092', '192.168.10.173:9092']
+  topic: payment
+  codec.json:
+    pretty: false
+
