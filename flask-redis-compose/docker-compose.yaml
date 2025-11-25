@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  web:
+    build: ./app
+    container_name: flask-app
+    ports:
+      - "5000:5000"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - flasknet
+
+  redis:
+    image: redis:7
+    container_name: redis-db
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - flasknet
+
+volumes:
+  redis-data:
+
+networks:
+  flasknet:
+    driver: bridge
