@@ -1,0 +1,6 @@
+#!/bin/bash
+if curl -s http://localhost:80/healthz | grep "OK"; then
+  exit 0
+else
+  exit 1
+fi
