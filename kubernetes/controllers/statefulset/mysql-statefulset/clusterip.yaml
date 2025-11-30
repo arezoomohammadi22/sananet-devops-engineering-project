@@ -1,0 +1,11 @@
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  ports:
+    - port: 3306
+  clusterIP: None  # Headless service
+  selector:
+    app: mysql
